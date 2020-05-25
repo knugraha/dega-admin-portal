@@ -1,4 +1,6 @@
 import axios from '../utils/axios';
+import { successNotification, errorNotification } from '../utils/notification';
+
 import {
   GET_SPACES_SUCCESS,
   GET_SPACES_FAILURE,
@@ -17,6 +19,7 @@ export const getSpaces = () => {
       url: API_GET_SPACES,
       method: 'get',
     }).catch((error) => {
+      errorNotification(error.message);
       dispatch(getSpacesFailure(error.message));
     });
     if (response) {
@@ -50,10 +53,12 @@ export const addSpaces = (data) => {
       method: 'post',
       data: data,
     }).catch((error) => {
+      errorNotification(error.message);
       dispatch(addSpacesFailure(error.message));
     });
     if (response) {
       console.log(response);
+      successNotification();
       dispatch(addSpacesSuccess(data));
     }
   };
